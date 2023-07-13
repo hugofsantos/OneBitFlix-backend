@@ -1,9 +1,11 @@
 import { AdminJSOptions } from 'adminjs';
 import { sequelize } from '../src/database';
+import { adminJsResouces } from '../src/admin/resources';
 
 export const adminJsConfig:AdminJSOptions = {
   databases: [sequelize],
   rootPath: '/admin', // Rota para acessar o admin
+  resources: adminJsResouces,
   branding: {
     companyName: 'OneBitFlix',
     logo: '/logoOnebitflix.svg',

@@ -2,6 +2,8 @@ import { AdminJSOptions } from 'adminjs';
 import { sequelize } from '../src/database';
 import { adminJsResouces } from '../src/admin/resources';
 import { locale } from '../src/admin/locale';
+import AdminJS from 'adminjs';
+import { categoryModel, courseModel, episodeModel, userModel } from '../src/models';
 
 export const adminJsConfig:AdminJSOptions = {
   databases: [sequelize],
@@ -27,6 +29,22 @@ export const adminJsConfig:AdminJSOptions = {
         accent: '#151515',
         hoverBg: '#151515',
       }
+    }
+  },
+  dashboard: {
+    component: AdminJS.bundle('../src/admin/components/Dashboard'), // src/admin/components/Dashboard.tsx
+    handler: async (req, res, context) => {
+      const courses = await courseModel.count();
+      const episodes = await episodeModel.count();
+      const categories = await categoryModel.count();
+      const standardUsers = await userModel.count({where: {role: 'user'}});
+
+      res.json({
+        'Cursos': courses,
+        'Episódios': episodes,
+        'Categorias': categories,
+        'Usuários': standardUsers
+      });
     }
   }
 };

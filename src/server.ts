@@ -11,7 +11,7 @@ app.use(express.static('public')); // Configura a pasta public como a padrão de
 app.use(adminJs.options.rootPath, adminJsRouter); // Configura a rota do AdminJs
 
 
-const PORT = process.env.APP_PORT || 8080;
+const PORT = process.env.APP_PORT  ? Number (process.env.APP_PORT) : 8080;
 
 app.listen(PORT, async () => {
   sequelize.authenticate()

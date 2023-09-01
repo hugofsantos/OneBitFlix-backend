@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import { sequelize } from './database';
 import { adminJs, adminJsRouter } from '../src/admin';
+import { router } from './routes';
 
 config(); // Configura variáveis de ambiente (.env)
 
@@ -9,6 +10,9 @@ const app = express();
 
 app.use(express.static('public')); // Configura a pasta public como a padrão de assets estáticos 
 app.use(adminJs.options.rootPath, adminJsRouter); // Configura a rota do AdminJs
+
+// Router
+app.use(router);
 
 
 const PORT = process.env.APP_PORT  ? Number (process.env.APP_PORT) : 8080;

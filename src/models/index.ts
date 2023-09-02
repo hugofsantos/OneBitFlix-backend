@@ -3,7 +3,7 @@ import { courseModel } from "./Course";
 import { episodeModel } from "./Episode";
 import { userModel } from "./User";
 
-categoryModel.hasMany(courseModel); // Uma categoria tem muitos cursos
+categoryModel.hasMany(courseModel, {as: 'courses'}); // Uma categoria tem muitos cursos
 courseModel.belongsTo(categoryModel); // Pertence à uma categoria
 
 courseModel.hasMany(episodeModel); // Um curso possui muitos episódios

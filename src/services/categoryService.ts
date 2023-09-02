@@ -20,5 +20,25 @@ export const categoryService = {
     }catch(err) {
       throw err;
     }
+  },
+  findByIdWithCourses: async (id: string) => {
+    try {
+      const categorieWithCourses = await categoryModel.findByPk(id, {
+        attributes: ['id', 'name'],
+        include: {
+          association: 'courses',
+          attributes: [
+            'id',
+            'name',
+            'synopsis',
+            ['thumbnail_url', 'thumbnailUrl']
+          ]
+        }
+      });
+
+      return categorieWithCourses;
+    } catch (err) {
+      throw err;
+    }
   }
 }

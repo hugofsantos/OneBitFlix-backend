@@ -6,7 +6,7 @@ import { userModel } from "./User";
 categoryModel.hasMany(courseModel, {as: 'courses'}); // Uma categoria tem muitos cursos (por padrão a relação se chama "Courses", renomeamos para "courses")
 courseModel.belongsTo(categoryModel); // Pertence à uma categoria
 
-courseModel.hasMany(episodeModel); // Um curso possui muitos episódios
+courseModel.hasMany(episodeModel, {as: 'episodes'}); // Um curso possui muitos episódios
 episodeModel.belongsTo(courseModel); // Um episódio pertence à um curso
 
 export {

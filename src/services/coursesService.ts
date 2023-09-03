@@ -1,6 +1,30 @@
 import { courseModel } from "../models";
 
-export const courseService = {
+export const courseService = {  
+  getRandomFeaturedCourses: async () => {
+    const featuredNumber = 3; // Quantidade de featured courses que será retornada
+
+
+    try {
+      const featuredCourses = await courseModel.findAll({
+        attributes: [
+          'id',
+          'name',
+          'synopsis',
+          ['thumbnail_url', 'thumbnailUrl']
+        ],
+        where: {
+          featured: true
+        }        
+      });
+
+      const randomFeaturedCourses = featuredCourses.sort((course1, course2) => 0.5 - Math.random());
+
+      return randomFeaturedCourses.slice(0, featuredNumber);
+    } catch (err) {
+      throw err;
+    }
+  },
   findByIdWithEpisodes: async (id: string) => {
     try {
       const courseWithEpisodes = await courseModel.findByPk(id, {

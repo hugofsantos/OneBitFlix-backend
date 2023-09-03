@@ -2,8 +2,16 @@ import { Request, Response } from "express";
 import { courseService } from "../services/coursesService";
 
 export const coursesController = {
-  // GET /courses/:id
-  show: async (req: Request, res: Response) => {
+  featured: async (req: Request, res: Response) => { // GET /courses/featured
+    try {
+      const featuredCourses = await courseService.getRandomFeaturedCourses();
+
+      return res.json(featuredCourses);
+    } catch (err) {
+      if (err instanceof Error) return res.status(400).json({ message: err.message })
+    }
+  },
+  show: async (req: Request, res: Response) => { // GET /courses/:id
     const { id } = req.params;
 
     try{
@@ -13,5 +21,6 @@ export const coursesController = {
     }catch(err) {
       if(err instanceof Error) return res.status(400).json({message: err.message})
     }
-  }
+  },
+
 };

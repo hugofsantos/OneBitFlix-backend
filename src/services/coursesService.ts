@@ -53,5 +53,17 @@ export const courseService = {
     } catch (err) {
       throw err;
     }
+  },
+  getTopTenNewest: async () => {
+    try {
+      const courses = await courseModel.findAll({
+        limit: 10,
+        order: [['created_at', 'DESC']]
+      });
+
+      return courses;
+    } catch (err) {
+      throw err;
+    }
   }
 };

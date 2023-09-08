@@ -11,6 +11,15 @@ export const coursesController = {
       if (err instanceof Error) return res.status(400).json({ message: err.message })
     }
   },
+  newest: async (req: Request, res: Response) => { // GET /courses/newest
+    try {
+      const newestCourses = await courseService.getTopTenNewest();
+
+      return res.json(newestCourses);
+    } catch (err) {
+      if (err instanceof Error) return res.status(400).json({ message: err.message })
+    }
+  },
   show: async (req: Request, res: Response) => { // GET /courses/:id
     const { id } = req.params;
 

@@ -10,6 +10,7 @@ router.get('/categories/:id', categoriesController.show);
 
 // Courses
 router.get('/courses/featured', coursesController.featured);
+router.get('/courses/newest', coursesController.newest);
 router.get('/courses/:id', coursesController.show);
 
 export {router};

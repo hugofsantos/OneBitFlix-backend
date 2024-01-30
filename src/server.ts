@@ -10,6 +10,7 @@ const app = express();
 
 app.use(express.static('public')); // Configura a pasta public como a padrão de assets estáticos 
 app.use(adminJs.options.rootPath, adminJsRouter); // Configura a rota do AdminJs
+app.use(express.json()); // Configura para ler o corpo da requisição como JSON
 
 // Router
 app.use(router);

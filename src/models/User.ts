@@ -2,6 +2,7 @@ import { sequelize } from '../database'
 import { DataTypes, Model, Optional } from 'sequelize'
 import bcrypt from 'bcrypt';
 
+
 export interface User {
   id: number
   firstName: string
@@ -15,7 +16,9 @@ export interface User {
 
 export interface UserCreationAttributes extends Optional<User, 'id'> {};
 
-export interface UserInstance extends Model<User, UserCreationAttributes>, User {};
+export interface UserInstance extends Model<User, UserCreationAttributes>, User {
+  checkPassword: (password: string) => boolean;
+};
 
 export const userModel = sequelize.define<UserInstance, User>('User', {
   id: {
@@ -68,3 +71,13 @@ export const userModel = sequelize.define<UserInstance, User>('User', {
     }
   }
 });
+
+
+
+userModel.prototype.checkPassword = function(password: string) {
+  try {
+    return bcrypt.compareSync(password, this.password);
+  } catch (error) {
+    throw error;
+  }
+}

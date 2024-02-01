@@ -3,7 +3,7 @@ import { categoriesController } from './controllers/categoriesController';
 import { coursesController } from './controllers/coursesController';
 import { EpisodesController } from './controllers/episodesController';
 import { authController } from './controllers/authController';
-import { ensureJwtAuth } from './middlewares/jwtAuth';
+import { ensureJwtAuth, ensureJwtAuthViaQuery } from './middlewares/jwtAuth';
 
 const router = express.Router();
 
@@ -22,5 +22,5 @@ router.get('/courses/search', ensureJwtAuth, coursesController.search);
 router.get('/courses/:id', ensureJwtAuth, coursesController.show);
 
 // Episodes
-router.get('/episodes/stream', EpisodesController.stream);
+router.get('/episodes/stream', ensureJwtAuthViaQuery ,EpisodesController.stream);
 export {router};

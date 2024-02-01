@@ -30,3 +30,28 @@ export function ensureJwtAuth(req: AuthenticatedRequest, res: Response, next: Ne
     return res.status(401).json({ message: "Não autorizado: Token inválido!" });
   }    
 }
+
+export function ensureJwtAuthViaQuery(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const {token} = req.query;
+
+  if(typeof token !== 'string')
+    return res.status(401).json({message: "O token deve ser do tipo string."});
+
+  try {
+    const decodedToken = jwtService.verifyToken(token);
+
+    userService.findByEmail((decodedToken as JwtPayload).email)
+      .then(user => {
+        req.user = user;
+      })
+      .finally(() => {
+        next();
+      });
+  } catch (error) {
+    return res.status(401).json({ message: "Não autorizado: Token inválido!" });
+  }    
+}

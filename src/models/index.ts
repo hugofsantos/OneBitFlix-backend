@@ -2,6 +2,7 @@ import { categoryModel } from "./Category";
 import { courseModel } from "./Course";
 import { episodeModel } from "./Episode";
 import { favoriteModel } from "./Favorite";
+import { LikeModel } from "./Like";
 import { userModel } from "./User";
 
 categoryModel.hasMany(courseModel, {as: 'courses'}); // Uma categoria tem muitos cursos (por padrão a relação se chama "Courses", renomeamos para "courses")
@@ -17,6 +18,8 @@ courseModel.belongsToMany(userModel, {through: favoriteModel}); // Um curso pode
 userModel.belongsToMany(courseModel, {through: favoriteModel}); // Um usuário tem muitos cursos favoritos
 userModel.hasMany(favoriteModel, {as: 'FavoritesCourses', foreignKey: 'user_id'});
 
+courseModel.belongsToMany(userModel, {through: LikeModel});
+userModel.belongsToMany(courseModel, {through: LikeModel});
 
 export {
   categoryModel,

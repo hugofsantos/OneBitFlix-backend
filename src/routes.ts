@@ -5,6 +5,7 @@ import { EpisodesController } from './controllers/episodesController';
 import { authController } from './controllers/authController';
 import { ensureJwtAuth, ensureJwtAuthViaQuery } from './middlewares/jwtAuth';
 import { favoritesController } from './controllers/favoritesController';
+import { likesController } from './controllers/likesController';
 
 const router = express.Router();
 
@@ -29,4 +30,9 @@ router.get('/episodes/stream', ensureJwtAuthViaQuery ,EpisodesController.stream)
 router.post('/favorites', ensureJwtAuth, favoritesController.save);
 router.get('/favorites', ensureJwtAuth, favoritesController.getFavoriteCourses);
 router.delete('/favorites/:id', ensureJwtAuth, favoritesController.delete);
+
+// Likes
+router.post('/likes', ensureJwtAuth, likesController.save);
+router.delete('/likes/:id', ensureJwtAuth, likesController.delete);
+
 export {router};

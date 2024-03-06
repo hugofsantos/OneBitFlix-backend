@@ -25,7 +25,7 @@ export const favoritesController = {
 
       return res.status(200).json(favoriteCourses);
     } catch (error) {
-      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso" });
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao buscar cursos favoritos" });
     }
   },
   // DELETE /favorites/:id
@@ -37,7 +37,7 @@ export const favoritesController = {
       await favoriteService.delete(userId, Number(courseId));
       return res.status(204).send();
     } catch (error) {
-      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso" });
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao remover favorito do curso" });
     }
   }
 };

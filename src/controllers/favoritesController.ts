@@ -27,5 +27,17 @@ export const favoritesController = {
     } catch (error) {
       return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso" });
     }
+  },
+  // DELETE /favorites/:id
+  delete: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.user!.id;
+    const courseId = req.params.id;
+
+    try {
+      await favoriteService.delete(userId, Number(courseId));
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso" });
+    }
   }
 };

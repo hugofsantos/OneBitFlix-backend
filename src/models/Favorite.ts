@@ -12,8 +12,8 @@ export interface Favorite {
 export interface FavoriteCreationAttributes extends Optional<Favorite, 'id'> {};
 
 export interface FavoriteInstance extends Model<Favorite, FavoriteCreationAttributes>, Favorite {
-  course?: CourseInstance;
-  user?: UserInstance
+  Course?: CourseInstance;
+  User?: UserInstance
 };
 
 export const favoriteModel = sequelize.define<FavoriteInstance, Favorite>('Favorite', {

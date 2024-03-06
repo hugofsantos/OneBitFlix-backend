@@ -8,5 +8,25 @@ export const favoriteService = {
     });
 
     return favorite;
+  },
+  findFavoriteCoursesByUserId: async (userId: number) => {
+    const favorites = await favoriteModel.findAll({
+      where: {userId},
+      include: {
+        association: 'Course',
+        attributes: [
+          'id',
+          'name',
+          'synopsis',
+          ['thumbnail_url', 'thumbnailUrl']
+        ],
+      },
+      attributes: [['user_id', 'userId']]
+    });
+
+    return {
+      userId,
+      courses: favorites.map(favorite => favorite.Course)
+    };
   }
 };

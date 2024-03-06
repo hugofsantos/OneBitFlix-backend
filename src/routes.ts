@@ -27,4 +27,5 @@ router.get('/episodes/stream', ensureJwtAuthViaQuery ,EpisodesController.stream)
 
 // Favorites
 router.post('/favorites', ensureJwtAuth, favoritesController.save);
+router.get('/favorites', ensureJwtAuth, favoritesController.getFavoriteCourses);
 export {router};

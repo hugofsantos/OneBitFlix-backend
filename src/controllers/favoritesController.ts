@@ -15,5 +15,17 @@ export const favoritesController = {
     } catch (error) {
       return res.status(500).json({message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso"});
     }
+  },
+  // GET /favorites
+  getFavoriteCourses: async (req: AuthenticatedRequest, res: Response) => {
+    const userId = req.user!.id;
+
+    try {
+      const favoriteCourses = await favoriteService.findFavoriteCoursesByUserId(userId);
+
+      return res.status(200).json(favoriteCourses);
+    } catch (error) {
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao favoritar curso" });
+    }
   }
 };

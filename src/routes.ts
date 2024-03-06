@@ -19,6 +19,7 @@ router.get('/categories/:id', ensureJwtAuth, categoriesController.show);
 
 // Courses
 router.get('/courses/featured', ensureJwtAuth, coursesController.featured);
+router.get('/courses/popular', ensureJwtAuth, coursesController.popular);
 router.get('/courses/newest', coursesController.newest);
 router.get('/courses/search', ensureJwtAuth, coursesController.search);
 router.get('/courses/:id', ensureJwtAuth, coursesController.show);

@@ -67,6 +67,31 @@ export const courseService = {
       throw err;
     }
   },
+  getTopTenByLikes: async () => {
+    const result = await courseModel.sequelize?.query(
+      `SELECT 
+        c.id,
+        c.name,
+        c.synopsis,
+        c.thumbnail_url AS thumbnailUrl,
+        COUNT(u.id) AS likes 
+      FROM courses c LEFT OUTER JOIN likes l
+        ON c.id = l.course_id JOIN users u ON
+        u.id = l.user_id
+      GROUP BY c.id
+      ORDER BY likes DESC
+      LIMIT 10;`
+    );
+
+    if(result) {
+      const [topTen] = result;
+
+      return topTen;
+    }
+
+    return null;
+  },
+
   findByName: async (name: string, page: number, perPage: number) => {
     try {
       const offset = (page - 1) * perPage; 

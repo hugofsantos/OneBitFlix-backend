@@ -25,7 +25,7 @@ export const likesController = {
       await likeService.remove(userId, courseId);
       return res.status(204).send();
     } catch (error) {
-      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao dar like no curso" });
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao remover like no curso" });
     }    
   }
 };

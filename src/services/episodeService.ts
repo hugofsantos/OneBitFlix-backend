@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { createReadStream, statSync } from "fs";
 import path from "path";
+import { WatchTimeCreationAttributes, watchTimeModel } from "../models/WatchTime";
 
 export const episodeService = {
   streamEpisodeToResponse: (res: Response, videoUrl: string, range: string | undefined) => {
@@ -37,5 +38,31 @@ export const episodeService = {
       res.writeHead(200, head); // Status 206 = Conteúdo parcial
       createReadStream(filePath).pipe(res);
     }      
+  },
+
+  getWatchTime: async (userId: number, episodeId: number) => {
+    const watchTime = await watchTimeModel.findOne({
+      where: {userId, episodeId},
+      attributes: ['seconds']
+    });
+
+    return watchTime;
+  },
+
+  setWatchTime: async(watchTime: WatchTimeCreationAttributes) => {
+    const {
+      episodeId,
+      userId,
+      seconds
+    } = watchTime;
+
+    const savedWatchTime = await watchTimeModel.findOne({where: {episodeId, userId}});
+
+    if(!savedWatchTime) return await watchTimeModel.create(watchTime); // Se não existir, cria
+
+    // Se o watchTime já existir apenas atualiza os segundos
+    savedWatchTime.seconds = seconds;
+    await savedWatchTime.save();
+    return savedWatchTime;
   }
 };

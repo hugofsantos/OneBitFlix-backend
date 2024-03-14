@@ -4,6 +4,7 @@ import { episodeModel } from "./Episode";
 import { favoriteModel } from "./Favorite";
 import { LikeModel } from "./Like";
 import { userModel } from "./User";
+import { watchTimeModel } from "./WatchTime";
 
 categoryModel.hasMany(courseModel, {as: 'courses'}); // Uma categoria tem muitos cursos (por padrão a relação se chama "Courses", renomeamos para "courses")
 courseModel.belongsTo(categoryModel); // Pertence à uma categoria
@@ -24,6 +25,10 @@ userModel.belongsToMany(courseModel, {through: favoriteModel}); // Um usuário t
 // Configurando as relações de like entre usuário e curso
 courseModel.belongsToMany(userModel, {through: LikeModel});
 userModel.belongsToMany(courseModel, {through: LikeModel});
+
+// Configurando as relações de watchTime entre episódio e usuário
+episodeModel.belongsToMany(userModel, {through: watchTimeModel});
+userModel.belongsToMany(episodeModel, {through: watchTimeModel});
 
 export {
   categoryModel,

@@ -25,6 +25,8 @@ router.get('/courses/search', ensureJwtAuth, coursesController.search);
 router.get('/courses/:id', ensureJwtAuth, coursesController.show);
 
 // Episodes
+router.get('/episodes/:id/watchTime', ensureJwtAuth, EpisodesController.getWatchTime);
+router.post('/episodes/:id/watchTime', ensureJwtAuth, EpisodesController.setWatchTime);
 router.get('/episodes/stream', ensureJwtAuthViaQuery ,EpisodesController.stream);
 
 // Favorites

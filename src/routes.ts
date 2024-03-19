@@ -6,6 +6,7 @@ import { authController } from './controllers/authController';
 import { ensureJwtAuth, ensureJwtAuthViaQuery } from './middlewares/jwtAuth';
 import { favoritesController } from './controllers/favoritesController';
 import { likesController } from './controllers/likesController';
+import { usersController } from './controllers/usersController';
 
 const router = express.Router();
 
@@ -37,5 +38,8 @@ router.delete('/favorites/:id', ensureJwtAuth, favoritesController.delete);
 // Likes
 router.post('/likes', ensureJwtAuth, likesController.save);
 router.delete('/likes/:id', ensureJwtAuth, likesController.delete);
+
+// User
+router.get('/users/current/watching', ensureJwtAuth, usersController.watching);
 
 export {router};

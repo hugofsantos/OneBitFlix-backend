@@ -48,6 +48,22 @@ export const userService = {
     }
   },
 
+  async update(id: number, attributes: {
+    firstName: string,
+    lastName: string,
+    phone: string,
+    birth: Date,
+    email: string
+  } ) {
+    try {
+      const [, updatedUsers] = await userModel.update(attributes, {where: {id}, returning: true});
+
+      return updatedUsers[0];
+    } catch (error) {
+      throw error;
+    }
+  },
+
   async getKeepWatching(id: number) {
     try {
       const userWithWatchingEpisodes = await userModel.findByPk(id, {

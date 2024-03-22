@@ -42,5 +42,6 @@ router.delete('/likes/:id', ensureJwtAuth, likesController.delete);
 // User
 router.get('/users/account', ensureJwtAuth, usersController.show);
 router.get('/users/current/watching', ensureJwtAuth, usersController.watching);
+router.put('/users/current', ensureJwtAuth, usersController.update);
 
 export {router};

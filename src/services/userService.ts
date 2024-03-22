@@ -64,6 +64,23 @@ export const userService = {
     }
   },
 
+  async updatePassword(id: number, password: string) {
+    try {
+      const [, updatedUsers] = await userModel.update(
+        {password}, 
+        { 
+          where: { id }, 
+          returning: true,
+          individualHooks: true
+        }
+      );
+
+      return updatedUsers[0];
+    } catch (error) {
+      throw error;
+    }    
+  },
+
   async getKeepWatching(id: number) {
     try {
       const userWithWatchingEpisodes = await userModel.findByPk(id, {

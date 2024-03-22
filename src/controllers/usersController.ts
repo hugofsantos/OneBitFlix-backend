@@ -38,7 +38,22 @@ export const usersController = {
       return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao atualizar usuário atual" });
     }
   },
+  // PUT /users/current/password
+  updatePassword: async (req: AuthenticatedRequest, res: Response) => {
+    const user = req.user!;
+    const { currentPassword, newPassword} = req.body;
 
+    try {
+      if(!user.checkPassword(currentPassword)) // Se a senha não for correta
+        return res.status(401).json("Acesso negado: A senha informada não corresponde a senha atual do usuário!")
+      
+      await userService.updatePassword(user.id, newPassword);
+      
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ message: (error as any).message ?? "Ocorreu algum erro ao atualizar senha do usuário atual" });
+    }
+  },
   //GET users/current/watching
   async watching(req: AuthenticatedRequest, res: Response) {
     const userId = req.user!.id;
